@@ -1,32 +1,79 @@
-import { fetchGallery } from 'Api';
 import { Component } from 'react';
 import { Searchbar } from './Searchbar/Searchbar';
+import { fetchGallery } from '../Services/Api';
+import { ImageGallery } from './ImageGallery/ImageGallery';
+import { Button } from './Button/Button';
 
 export class App extends Component {
   state = {
     gallery: [],
+    query: '',
+    page: 1,
     isLoading: false,
+    loadMore: false,
   };
-
-  // async componentDidMount() {
-  //   try {
-  //     const fetchGallery = await fetchGallery();
-  //     this.setState({ gallery: fetchGallery });
-  //   } catch(error){}
-  //  }
-  fetchGallery = async values => {
-    try{this.setState({ isLoading: true });
-    const gallery = await fetchGallery(values);
-    this.setState({ gallery: [fetchGallery], isLoading: false });
-    console.log(gallery);}catch(error){console.log(error);;}
-    
+  //  handleSubmit = ({ searchQuery }) => {
+  //   const { query, page } = this.state;
+  //   if (searchQuery === query && page === 1) return;
+  //   this.setState({
+  //     query: searchQuery.trim(),
+  //     images: [],
+  //     page: 1,
+  //     loadMore: false,
+  //   });
+  // };
+  handleFormSubmit = ({ searchQuery }) => {
+    const { query, page } = this.state;
+    if (query === searchQuery && page === 1) return;
+    this.setState({
+      query: searchQuery.toLowerCase(),
+      gallery: [],
+      page: 1,
+      loadMore: false,
+    });
+  };
+  componentDidUpdate(prevProps, prevState) {
+    const { query, page } = this.state;
+    if (prevState.query !== query || prevState.page !== page) {
+      this.getGallery();
+    }
+  }
+  getGallery = async () => {
+    const { query, page } = this.state;
+    this.setState({ isLoading: true });
+    try {
+      const responce = await fetchGallery(query, page);
+      const gallery = responce.hits;
+      const total = responce.totalHits;
+      if (total === 0) {
+        console.log(
+          'Sorry, there are no images matching your search query. Please try again.'
+        );
+        return;
+      }
+      this.setState(state => ({
+        gallery: [...state.gallery, ...gallery],
+      }));
+    } catch (error) {
+      console.log('Error happend on server. Please, reload webpage.');
+    } finally {
+      this.setState({ isLoading: false });
+    }
+  };
+  loadMore = () => {
+    this.setState(prevState => ({
+      page: prevState.page + 1,
+    }));
   };
   render() {
-    const { isLoading } = this.state;
+    const { gallery, isLoading } = this.state;
     return (
       <div>
-        {isLoading && <div>Loading</div>}
-        <Searchbar onSubmit={this.fetchGallery} isSubmitting={isLoading} />
+        <Searchbar onSubmit={this.handleFormSubmit} />
+        {gallery.length > 0 && <ImageGallery gallery={gallery} />}
+        {gallery.length > 0 && gallery.length !== this.totalHits && (
+          <Button onClick={this.loadMore} />
+        )}
       </div>
     );
   }

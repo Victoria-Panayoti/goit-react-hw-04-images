@@ -1,20 +1,20 @@
-import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 
 const initialValues = {
-  query:'',
-}
+  searchQuery: '',
+};
 const SearchbarSchema = Yup.object().shape({
-  query: Yup.string()
+  searchQuery: Yup.string()
     .trim()
     .min(2, 'Too Short!')
     .max(100, 'Too Long!')
-    .required('Required field!'),
+    .required('What would you like to find?'),
 });
-export const Searchbar = ({onSubmit,isSubmitting}) => {
-  const handleSubmit = (values, { resetForm }) => {
-    resetForm();
+export const Searchbar = ({ onSubmit }) => {
+  const handleSubmit = (values, actions) => {
     onSubmit(values);
+    actions.resetForm();
   };
   return (
     <Formik
@@ -22,11 +22,15 @@ export const Searchbar = ({onSubmit,isSubmitting}) => {
       validationSchema={SearchbarSchema}
       onSubmit={handleSubmit}
     >
-      <Form autoComplete="off">
-        <button type="submit" disabled={isSubmitting}>Search</button>
+      <Form>
+        <button type="submit">Search</button>
         <label>
-          <Field name="query" required />
-          <ErrorMessage name="query" component="div" />
+          <Field
+            name="searchQuery"
+            autoComplete="off"
+            autoFocus
+            placeholder="Search images and photos"
+          ></Field>
         </label>
       </Form>
     </Formik>
