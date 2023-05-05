@@ -12,7 +12,7 @@ export class App extends Component {
     isLoading: false,
     loadMore: false,
   };
-  
+
   handleFormSubmit = ({ searchQuery }) => {
     const { query, page } = this.state;
     if (query === searchQuery && page === 1) return;
@@ -57,12 +57,12 @@ export class App extends Component {
     }));
   };
   render() {
-    const { gallery } = this.state;
+    const { gallery, isLoading } = this.state;
     return (
       <div>
         <Searchbar onSubmit={this.handleFormSubmit} />
         {gallery.length > 0 && <ImageGallery gallery={gallery} />}
-        {gallery.length > 0 && gallery.length !== this.totalHits && (
+        {!isLoading&& gallery.length > 11 && (
           <Button onClick={this.loadMore} />
         )}
       </div>
