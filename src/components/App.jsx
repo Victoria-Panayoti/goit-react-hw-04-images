@@ -12,16 +12,7 @@ export class App extends Component {
     isLoading: false,
     loadMore: false,
   };
-  //  handleSubmit = ({ searchQuery }) => {
-  //   const { query, page } = this.state;
-  //   if (searchQuery === query && page === 1) return;
-  //   this.setState({
-  //     query: searchQuery.trim(),
-  //     images: [],
-  //     page: 1,
-  //     loadMore: false,
-  //   });
-  // };
+  
   handleFormSubmit = ({ searchQuery }) => {
     const { query, page } = this.state;
     if (query === searchQuery && page === 1) return;
@@ -66,7 +57,7 @@ export class App extends Component {
     }));
   };
   render() {
-    const { gallery, isLoading } = this.state;
+    const { gallery } = this.state;
     return (
       <div>
         <Searchbar onSubmit={this.handleFormSubmit} />
