@@ -1,4 +1,4 @@
-import { Field, Form, Formik } from 'formik';
+import { Field, Form, Formik, ErrorMessage} from 'formik';
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
 
@@ -33,6 +33,7 @@ export const Searchbar = ({ onSubmit }) => {
             placeholder="Search images and photos"
           ></Field>
         </label>
+        <ErrorMessage name="searchQuery"  component="div"/>
       </Form>
     </Formik>
   );
