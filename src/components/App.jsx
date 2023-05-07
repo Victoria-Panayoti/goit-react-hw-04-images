@@ -1,10 +1,13 @@
 import { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Searchbar } from './Searchbar/Searchbar';
 import { fetchGallery } from '../Services/Api';
 import { ImageGallery } from './ImageGallery/ImageGallery';
 import { Button } from './Button/Button';
 
 export class App extends Component {
+  static propTypes = { searchQuery: PropTypes.string };
+
   state = {
     gallery: [],
     query: '',

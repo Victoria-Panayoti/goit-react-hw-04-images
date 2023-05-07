@@ -1,6 +1,7 @@
 import { ImageGalleryItem } from 'components/ImageGalleryItem/ImageGalleryItem';
+import PropTypes from 'prop-types';
 
-export const ImageGallery = ({ gallery, selectedImage }) => (
+export const ImageGallery = ({ gallery }) => (
   <ul>
     {gallery.map(({ id, webformatURL, tags, largeImageURL }) => (
       <ImageGalleryItem
@@ -8,8 +9,14 @@ export const ImageGallery = ({ gallery, selectedImage }) => (
         webformatURL={webformatURL}
         tags={tags}
         largeImageURL={largeImageURL}
-        // selectedImage={() => selectedImage(largeImageURL, tags)}
       />
     ))}
   </ul>
 );
+ImageGallery.propTypes = {
+  gallery: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+    })
+  ),
+};

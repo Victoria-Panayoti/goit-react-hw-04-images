@@ -1,5 +1,6 @@
 import { Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
+import PropTypes from 'prop-types';
 
 const initialValues = {
   searchQuery: '',
@@ -35,4 +36,8 @@ export const Searchbar = ({ onSubmit }) => {
       </Form>
     </Formik>
   );
+};
+
+Searchbar.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
 };
