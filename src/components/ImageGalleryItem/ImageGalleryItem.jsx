@@ -1,6 +1,7 @@
 import { ImageModal } from 'components/Modal/Modal';
 import { Component } from 'react';
 import PropTypes from 'prop-types';
+import { GalleryImage, GalleryItem } from './ImageGalleryItem.styled';
 
 export class ImageGalleryItem extends Component {
   static propTypes = {
@@ -22,15 +23,15 @@ export class ImageGalleryItem extends Component {
   render() {
     const { webformatURL, largeImageURL, tags, id } = this.props;
     return (
-      <li key={id}>
-        <img src={webformatURL} alt={tags} onClick={this.setSelectedImage} />
+      <GalleryItem key={id}>
+        <GalleryImage src={webformatURL} alt={tags} onClick={this.setSelectedImage} />
         <ImageModal
           isOpen={this.state.selectedImage !== null}
           onClose={this.closeModal}
           largeImageURL={largeImageURL}
           tags={tags}
         />
-      </li>
+      </GalleryItem>
     );
   }
 }

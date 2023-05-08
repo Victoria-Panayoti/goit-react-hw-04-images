@@ -1,6 +1,7 @@
-import { Field, Form, Formik, ErrorMessage} from 'formik';
+import { Formik } from 'formik';
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
+import { ErrMessage, Header, SearchForm, SearchFormButton, SearchFormIcon, SearchFormInput } from './Searchbar.styled';
 
 const initialValues = {
   searchQuery: '',
@@ -18,24 +19,28 @@ export const Searchbar = ({ onSubmit }) => {
     actions.resetForm();
   };
   return (
-    <Formik
-      initialValues={initialValues}
-      validationSchema={SearchbarSchema}
-      onSubmit={handleSubmit}
-    >
-      <Form>
-        <button type="submit">Search</button>
-        <label>
-          <Field
-            name="searchQuery"
-            autoComplete="off"
-            autoFocus
-            placeholder="Search images and photos"
-          ></Field>
-        </label>
-        <ErrorMessage name="searchQuery"  component="div"/>
-      </Form>
-    </Formik>
+    <Header>
+      <Formik
+        initialValues={initialValues}
+        validationSchema={SearchbarSchema}
+        onSubmit={handleSubmit}
+      >
+        <SearchForm>
+          <SearchFormButton type="submit">
+              <SearchFormIcon />
+          </SearchFormButton>
+          <label>
+            <SearchFormInput
+              name="searchQuery"
+              autoComplete="off"
+              autoFocus
+              placeholder="Search images and photos"
+            ></SearchFormInput>
+          </label>
+          <ErrMessage name="searchQuery" component="div" />
+        </SearchForm>
+      </Formik>
+    </Header>
   );
 };
 

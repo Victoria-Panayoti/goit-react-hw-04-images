@@ -1,7 +1,11 @@
 import Modal from 'react-modal';
 import PropTypes from 'prop-types';
+import { ModalBtn, ModalImg } from './Modal.styled';
 
 const customStyles = {
+  overlay: {
+    zIndex: '998',
+  },
   content: {
     top: '50%',
     left: '50%',
@@ -9,6 +13,7 @@ const customStyles = {
     bottom: 'auto',
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
+    zIndex:'999'
   },
 };
 Modal.setAppElement('#root');
@@ -21,10 +26,10 @@ export const ImageModal = ({ largeImageURL, tags, isOpen, onClose }) => {
       style={customStyles}
       contentLabel="Example Modal"
     >
-      <img src={largeImageURL} alt={tags} />
-      <button type="button" onClick={onClose}>
+      <ModalImg src={largeImageURL} alt={tags} />
+      <ModalBtn type="button" onClick={onClose}>
         Close
-      </button>
+      </ModalBtn>
     </Modal>
   );
 };

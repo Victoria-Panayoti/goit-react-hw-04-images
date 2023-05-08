@@ -6,6 +6,8 @@ import { fetchGallery } from '../Services/Api';
 import { ImageGallery } from './ImageGallery/ImageGallery';
 import { Button } from './Button/Button';
 import { Loader } from './Loader/Loader';
+import { GlobalStyle } from './GlobalStyle';
+import { Layout } from './Layout/Layout';
 
 export class App extends Component {
   static propTypes = { searchQuery: PropTypes.string };
@@ -63,7 +65,7 @@ export class App extends Component {
   render() {
     const { gallery, isLoading,error } = this.state;
     return (
-      <div>
+      <Layout>
         <Searchbar onSubmit={this.handleFormSubmit} />
         <ToastContainer autoClose={3000} theme="colored" pauseOnHover />
         {error && (
@@ -76,7 +78,8 @@ export class App extends Component {
         {!isLoading && gallery.length > 11 && (
           <Button onClick={this.loadMore} />
         )}
-      </div>
+        <GlobalStyle/>
+      </Layout>
     );
   }
 }
