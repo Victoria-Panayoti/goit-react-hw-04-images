@@ -1,5 +1,4 @@
 import { Component } from 'react';
-import PropTypes from 'prop-types';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Searchbar } from './Searchbar/Searchbar';
@@ -11,8 +10,6 @@ import { GlobalStyle } from './GlobalStyle';
 import { Layout } from './Layout/Layout';
 
 export class App extends Component {
-  static propTypes = { searchQuery: PropTypes.string };
-
   state = {
     gallery: [],
     query: '',
